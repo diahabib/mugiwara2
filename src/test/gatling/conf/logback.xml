@@ -4,6 +4,7 @@
 <configuration>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <file>${JENKINS_HOME}/workspace/my-job/logs/spring.log</file>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{15} - %msg%n%rEx</pattern>
             <immediateFlush>false</immediateFlush>
