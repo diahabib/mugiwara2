@@ -3,23 +3,30 @@
 
 <configuration>
 
+    <!-- Console Appender -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-    <file>${JENKINS_HOME}/workspace/my-job/logs/spring.log</file>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{15} - %msg%n%rEx</pattern>
             <immediateFlush>false</immediateFlush>
         </encoder>
     </appender>
 
-    <!-- Uncomment for logging ALL HTTP request and responses -->
-    <!--    <logger name="io.gatling.http.ahc" level="TRACE" /> -->
-    <!--    <logger name="io.gatling.http.response" level="TRACE" /> -->
-    <!-- Uncomment for logging ONLY FAILED HTTP request and responses -->
-    <!--    <logger name="io.gatling.http.ahc" level="DEBUG" /> -->
-    <!--    <logger name="io.gatling.http.response" level="DEBUG" /> -->
+    <!-- File Appender -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${JENKINS_HOME}/workspace/my-job/logs/spring.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${JENKINS_HOME}/workspace/my-job/logs/spring.log.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{15} - %msg%n%rEx</pattern>
+        </encoder>
+    </appender>
 
+    <!-- Root Logger Configuration -->
     <root level="WARN">
         <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
     </root>
-
 </configuration>
